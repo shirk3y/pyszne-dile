@@ -1,0 +1,23 @@
+.__sale__ {
+  text-decoration: line-through;
+  color: #fdcd9d !important;
+}
+
+.__alt-price__ {
+  margin-left: 24px;
+  display: inline-block;
+  background: url(https://pizzaportal.pl/favicon.ico?v=2) no-repeat;
+  background-size: 14px;
+  background-position: 0 0px;
+  padding-left: 24px;
+  opacity: 0.3;
+  color: #e00e0e;
+  font-size: 15px;
+}
+
+.__sale__ .__alt-price__ {
+  font-size: 22px;
+  opacity: 1;
+  background-position: 0 2px;
+  background-size: 18px;
+}

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "version": "0.1",
+  "name": "Pyszne Dile",
+  "short_name": "Pyszne Dile",
+  "description": "Find cheaper food",
+  "permissions": [
+    "https://pizzaportal.pl/",
+    "https://www.pyszne.pl/",
+    "tabs",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "downloads",
+    "declarativeContent",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/images/icon16.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.pyszne.pl/*"],
+      "js": ["common.js", "pyszne.js"],
+      "css": ["pyszne.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://pizzaportal.pl/*"],
+      "js": ["xhrInject.js", "common.js", "pizzaportal.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": ["xhr.js"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
+}
