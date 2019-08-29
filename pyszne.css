@@ -11,11 +11,12 @@
   background-position: 0 0px;
   padding-left: 24px;
   opacity: 0.3;
-  color: #e00e0e;
+  color: transparent;
   font-size: 15px;
 }
 
 .__sale__ .__alt-price__ {
+  color: #e00e0e;
   font-size: 22px;
   opacity: 1;
   background-position: 0 2px;

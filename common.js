@@ -1,4 +1,4 @@
-// Logs
+// Centralized logging
 
 let logger = "common";
 
@@ -13,7 +13,7 @@ const log = (...args) => {
 const subscribeToLogs = () => {
   chrome.runtime.sendMessage({ type: "LOG_SUBSCRIBE" });
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  chrome.runtime.onMessage.addListener(request => {
     if (request.type === "LOG_PUBLISH") {
       console.log(`[${request.logger}]`, ...request.args);
     }
@@ -121,8 +121,6 @@ const typeText = (input, text) =>
 const fillInput = async (input, text) => {
   let lastValue = input.value;
 
-  // input.click();
-  // input.focus();
   input.value = text;
 
   let event = new Event("change", { bubbles: true });

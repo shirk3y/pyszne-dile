@@ -12,19 +12,8 @@
     "storage",
     "unlimitedStorage",
     "downloads",
-    "declarativeContent",
-    "webRequest",
-    "webRequestBlocking"
+    "declarativeContent"
   ],
-  "icons": {
-    "16": "assets/images/icon16.png",
-    "48": "assets/images/icon48.png",
-    "128": "assets/images/icon128.png"
-  },
-  "browser_action": {
-    "default_icon": "assets/images/icon16.png",
-    "default_popup": "popup.html"
-  },
   "content_scripts": [
     {
       "matches": ["https://www.pyszne.pl/*"],
@@ -34,13 +23,12 @@
     },
     {
       "matches": ["https://pizzaportal.pl/*"],
-      "js": ["xhrInject.js", "common.js", "pizzaportal.js"],
+      "js": ["common.js", "pizzaportal.js"],
       "run_at": "document_start"
     }
   ],
-  "web_accessible_resources": ["xhr.js"],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["chrome-extension-async.js", "background.js"],
     "persistent": false
   }
 }

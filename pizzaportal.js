@@ -1,12 +1,11 @@
 setLogger("pizzaportal");
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === "FOO") {
+  if (request.type === "FIND_PIZZAPORTAL_DEALS") {
     // log({ request });
     scrape(request.address, request.restaurant).then(
       ({ address, restaurant, meals }) =>
-        sendResponse({ address, restaurant, meals }),
-      error => log("Error", error)
+        sendResponse({ address, restaurant, meals })
     );
 
     return true;
@@ -20,11 +19,7 @@ const scrape = async (address, restaurant) => {
 
   const input = await queryOne(".singleAddress-input-container input");
 
-  // await sleep(500);
-  // await fillInput(input, "");
-  // await sleep(100);
   await fillInput(input, address);
-  // await sleep(100);
 
   await click(".pp_address-suggestion-item:first-child");
   await click(".picker-address-form button");
@@ -45,7 +40,7 @@ const scrape = async (address, restaurant) => {
   if (!found) throw `Restaurant not found: ${restaurant}`;
   found.click();
 
-  await click(".dialog-popup-buttons .positive-button");
+  // await click(".dialog-popup-buttons .positive-button");
 
   let meals = {};
 
@@ -56,7 +51,8 @@ const scrape = async (address, restaurant) => {
       price: select(".restaurant-menu-product-price", {
         root: node,
         parse: parsePrice
-      })
+      }),
+      url: location.href
     };
   });
 
@@ -64,22 +60,3 @@ const scrape = async (address, restaurant) => {
 
   return { meals };
 };
-
-/*
-
-(await queryAll(".restaurant-list li h2.restaurant-list-item-name")).forEach(
-  node => {
-    const name = normalizeRestaurantName(extractText(node));
-
-    if (name === normalizedRestaurant) {
-      log("Found restaurant:", restaurant);
-      found = node;
-    }
-  }
-);
-
-*/
-
-// proc([query, "li"], [filter, item => item.id !== "foo"], [forEach, node => {
-//   const name = await proc(node, extractText, normalizeRestaurantName)
-// }]);

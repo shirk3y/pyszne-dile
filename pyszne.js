@@ -25,7 +25,7 @@ setInterval(() => {
   });
 
   chrome.runtime.sendMessage(
-    { type: "PIZZAPORTAL_CHECK_PRICES", restaurant, address },
+    { type: "FIND_DEALS", restaurant, address },
     response => {
       log({ response });
 
@@ -37,11 +37,21 @@ setInterval(() => {
         );
 
         if (match) {
-          log("match", { match, altMeal });
+          // log("match", { match, altMeal });
           const altNode = document.createElement("a");
           altNode.className = "__alt-price__";
-          altNode.innerHTML = formatPrice(altMeal.price);
-          altNode.href = "https://pizzaportal.pl";
+          altNode.innerHTML =
+            altMeal.price - match.price < 0
+              ? formatPrice(altMeal.price - match.price)
+              : "SAME PRICE";
+          altNode.href = altMeal.url;
+          altNode.onClick = e => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const win = window.open(altMeal.url, "_blank");
+            win.focus();
+          };
 
           node = document
             .getElementById(match.id)
